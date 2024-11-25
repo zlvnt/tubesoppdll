@@ -19,9 +19,9 @@ public class VehicleTest {
             System.out.println("\n=== Menu Showroom ===");
             System.out.println("1. Lihat Daftar Kendaraan");
             System.out.println("2. Cari Kendaraan");
-            System.out.println("4. Beli Kendaraan");
-            System.out.println("5. Riwayat Transaksi");
-            System.out.println("6. Keluar");
+            System.out.println("3. Beli Kendaraan");
+            System.out.println("4. Riwayat Transaksi");
+            System.out.println("5. Keluar");
             System.out.print("Pilih menu: ");
             choice = scanner.nextInt();
 
@@ -52,18 +52,6 @@ public class VehicleTest {
                     break;
 
                 case 3:
-                    // Detail Kendaraan
-                    System.out.print("\nMasukkan nomor kendaraan untuk detail: ");
-                    int detailIndex = scanner.nextInt() - 1;
-                    if (detailIndex >= 0 && detailIndex < vehicles.size()) {
-                        System.out.println("\n-- Detail Kendaraan --");
-                        System.out.println(vehicles.get(detailIndex));
-                    } else {
-                        System.out.println("Pilihan tidak valid.");
-                    }
-                    break;
-
-                case 4:
                     // Beli Kendaraan
                     System.out.print("\nMasukkan nomor kendaraan yang ingin dibeli: ");
                     int buyIndex = scanner.nextInt() - 1;
@@ -86,7 +74,7 @@ public class VehicleTest {
                     }
                     break;
 
-                case 5:
+                case 4:
                     // Riwayat Transaksi
                     System.out.println("\n-- Riwayat Transaksi --");
                     if (riwayatTransaksi.isEmpty()) {
@@ -99,7 +87,7 @@ public class VehicleTest {
                     }
                     break;
 
-                case 6:
+                case 5:
                     System.out.println("Terima kasih telah menggunakan sistem showroom kami!");
                     break;
 
