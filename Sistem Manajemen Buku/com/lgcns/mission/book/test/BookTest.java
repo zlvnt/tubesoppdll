@@ -4,7 +4,6 @@ import mission.book.*;
 
 public class BookTest {
     public static void main(String[] args) {
-        // Array untuk Book dan SecondBook
         Book[] books = {
             new Book("Apa itu keadilan?", "Michael Sandel", 15000, 15),
             new Book("Pistol, kuman dan Besi", "Jared Diamond", 28000, 3),
@@ -31,13 +30,13 @@ public class BookTest {
         }
 
         System.out.println();
-        customers[0].buyBook(books[2], 3);  // Membeli 3 Street of Dark Shops
-        customers[0].buyBook(books[1], 0);  // Membeli 0 Pistol, kuman dan Besi
-        customers[0].buyBook(secondBooks[1]);  // Membeli Cerita pendek Tolstoy
+        customers[0].buyBook(books[2], 3);
+        customers[0].buyBook(books[1], 0);
+        customers[0].buyBook(secondBooks[1]);
 
         System.out.println();
-        customers[1].buyBook(books[0], 1);  // Membeli 1 Apa itu keadilan?
-        customers[1].buyBook(secondBooks[0]);  // Membeli Penjelajah warisan budaya
+        customers[1].buyBook(books[0], 1);
+        customers[1].buyBook(secondBooks[0]);
 
         System.out.println();
         System.out.println("--Informasi akhir buku--");
