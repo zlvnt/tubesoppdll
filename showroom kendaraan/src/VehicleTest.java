@@ -19,7 +19,6 @@ public class VehicleTest {
             System.out.println("\n=== Menu Showroom ===");
             System.out.println("1. Lihat Daftar Kendaraan");
             System.out.println("2. Cari Kendaraan");
-            System.out.println("3. Detail Kendaraan");
             System.out.println("4. Beli Kendaraan");
             System.out.println("5. Riwayat Transaksi");
             System.out.println("6. Keluar");
