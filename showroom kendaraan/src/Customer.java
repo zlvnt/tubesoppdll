@@ -1,6 +1,6 @@
 public class Customer {
     private String name;
-    private int totalPurchase;
+    private double totalPurchase;
 
     // Constructor
     public Customer(String name) {
@@ -13,28 +13,21 @@ public class Customer {
         return name;
     }
 
-    public int getTotalPurchase() {
+    public double getTotalPurchase() {
         return totalPurchase;
     }
 
-    // Buy vehicle and update total purchase
-    public void buyVehicle(Vehicle vehicle, int quantity) {
-        if (quantity <= 0) {
-            System.out.println("Jumlah pembelian harus lebih dari nol!");
-            return;
-        }
-    
-        if (vehicle.getStockQuantity() >= quantity) {
-            vehicle.setStockQuantity(vehicle.getStockQuantity() - quantity);
-            totalPurchase += vehicle.getPrice() * quantity;
-            System.out.println(name + " membeli " + quantity + " unit " + vehicle.getModel() + ". Total: Rp" + (vehicle.getPrice() * quantity));
+    // Add purchase amount to total
+    public void addPurchase(double amount) {
+        if (amount > 0) {
+            this.totalPurchase += amount;
         } else {
-            System.out.println("[Error] Stok tidak mencukupi untuk model: " + vehicle.getModel());
+            System.out.println("Jumlah pembelian harus lebih dari nol!");
         }
     }
 
     @Override
     public String toString() {
-        return "Nama: " + name + ", Total Pembelian: " + totalPurchase;
+        return "Nama: " + name + ", Total Pembelian: Rp" + totalPurchase;
     }
 }
