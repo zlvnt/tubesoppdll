@@ -18,8 +18,16 @@ public class kontrolshowroom {
 
         // Tambahkan kendaraan (contoh data)
         vehicles.add(new Car("Toyota", "Camry", 500000000, 3, "Bensin", 5));
-        vehicles.add(new Motorcycle("Yamaha", "NMAX", 30000000, 7, 155, "Cruiser"));
+        vehicles.add(new Car("Honda", "Civic", 400000000, 4, "Bensin", 5));
+        vehicles.add(new Car("Mitsubishi", "Pajero Sport", 550000000, 3, "Diesel", 7));
+        vehicles.add(new Car("Hyundai", "Ioniq 5", 850000000, 2, "Listrik", 5));
+        vehicles.add(new Car("Suzuki", "Ertiga", 250000000, 5, "Bensin", 7));
 
+        vehicles.add(new Motorcycle("Yamaha", "NMAX", 30000000, 7, 155, "Cruiser"));
+        vehicles.add(new Motorcycle("Honda", "PCX 160", 32000000, 8, 160, "Scooter"));
+        vehicles.add(new Motorcycle("Kawasaki", "Ninja 250", 64000000, 10, 250, "Sport"));
+        vehicles.add(new Motorcycle("Suzuki", "GSX-S150", 30000000, 9, 150, "Street Bike"));
+        vehicles.add(new Motorcycle("Vespa", "Primavera 150", 55000000, 7, 150, "Scooter"));
         // Tambahkan pelanggan (contoh data)
         customers.add(new Customer("John Doe"));
     }
@@ -130,6 +138,13 @@ public class kontrolshowroom {
                 riwayatTransaksi.add(vehicle.getBrand() + " " + vehicle.getModel() + " - " + quantity + " unit - Rp" + total);
                 customer.addPurchase(total);
                 System.out.println("Transaksi berhasil! Total: Rp" + total);
+                System.out.println("\n========Invoice Pembelian========");
+                System.out.println("Nama Pelanggan   : " + customer.getName());
+                System.out.println("Kendaraan        : " + vehicle.getBrand() + " " + vehicle.getModel());
+                System.out.println("Harga per Unit   : Rp" + vehicle.getPrice());
+                System.out.println("Jumlah Unit      : " + quantity);
+                System.out.println("Total Harga      : Rp" + total);
+                System.out.println("=================================");
             } else {
                 System.out.println("Stok tidak mencukupi!");
             }
