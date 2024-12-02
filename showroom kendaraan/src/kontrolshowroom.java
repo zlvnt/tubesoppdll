@@ -121,8 +121,19 @@ public class kontrolshowroom {
             Vehicle vehicle = vehicles.get(index);
 
             if (vehicle.getStockQuantity() >= quantity) {
+                double total = vehicle.getPrice() * quantity;
+    
+                System.out.print("Masukkan nominal pembayaran: ");
+                double nominalPembayaran = scanner.nextDouble();
+    
+                if (nominalPembayaran < total) {
+                    System.out.println("Uang tidak cukup. Transaksi dibatalkan.");
+                    return;
+                }
+
+                double kembalian = nominalPembayaran - total;
                 System.out.print("Masukkan nama pelanggan: ");
-                scanner.nextLine(); // Clear buffer
+                scanner.nextLine(); 
                 String customerName = scanner.nextLine();
                 Customer customer = findCustomerByName(customerName);
 
@@ -133,18 +144,18 @@ public class kontrolshowroom {
                 }
 
                 vehicle.setStockQuantity(vehicle.getStockQuantity() - quantity);
-                double total = vehicle.getPrice() * quantity;
                 totalPembelian += total;
                 riwayatTransaksi.add(vehicle.getBrand() + " " + vehicle.getModel() + " - " + quantity + " unit - Rp" + total);
                 customer.addPurchase(total);
+
                 System.out.println("Transaksi berhasil! Total: Rp" + total);
-                System.out.println("\n========Invoice Pembelian========");
-                System.out.println("Nama Pelanggan   : " + customer.getName());
-                System.out.println("Kendaraan        : " + vehicle.getBrand() + " " + vehicle.getModel());
-                System.out.println("Harga per Unit   : Rp" + vehicle.getPrice());
-                System.out.println("Jumlah Unit      : " + quantity);
-                System.out.println("Total Harga      : Rp" + total);
-                System.out.println("=================================");
+                System.out.println("Nominal pembayaran: Rp" + nominalPembayaran);
+
+                if (kembalian > 0) {
+                    System.out.println("Kembalian: Rp" + kembalian);
+                }
+
+                generateInvoice(customer, vehicle, quantity, total, nominalPembayaran, kembalian);
             } else {
                 System.out.println("Stok tidak mencukupi!");
             }
@@ -153,8 +164,19 @@ public class kontrolshowroom {
         }
     }
 
+    private void generateInvoice(Customer customer, Vehicle vehicle, int quantity, double total, double nominalPembayaran, double kembalian) {
+        System.out.println("\n========Invoice Pembelian========");
+        System.out.println("Nama Pelanggan   : " + customer.getName());
+        System.out.println("Kendaraan        : " + vehicle.getBrand() + " " + vehicle.getModel());
+        System.out.println("Harga per Unit   : Rp" + vehicle.getPrice());
+        System.out.println("Jumlah Unit      : " + quantity);
+        System.out.println("Total Harga      : Rp" + total);
+        System.out.println("Nominal Dibayar  : Rp" + nominalPembayaran);
+        System.out.println("Kembalian        : Rp" + kembalian);
+        System.out.println("=================================");
+    }
     private void showTransactionHistory() {
-        kontrolmenu.showTransactionHistory(riwayatTransaksi, totalPembelian);
+    kontrolmenu.showTransactionHistory(riwayatTransaksi, totalPembelian);
     }
 
     private Customer findCustomerByName(String name) {
