@@ -1,42 +1,26 @@
 public class Car extends Vehicle {
-    private String fuelType;
-    private int seatingCapacity;
+    private String tipebb;
+    private int kapasitasduduk;
 
     // Constructor
-    public Car(String brand, String model, int price, int stockQuantity, String fuelType, int seatingCapacity) {
-        super(brand, model, price, stockQuantity);
-        this.fuelType = fuelType;
-        this.seatingCapacity = seatingCapacity;
+    public Car(String brand, String model, int harga, int stockQuantity, String tipebb, int kapasitasduduk) {
+        super(brand, model, harga, stockQuantity);
+        this.tipebb = tipebb;
+        this.kapasitasduduk = kapasitasduduk;
     }
 
     // Getter and Setter
-    public String getFuelType() {
-        return fuelType;
+    public String getTipebb() {
+        return tipebb;
     }
 
-    public void setFuelType(String fuelType) {
-        if (!fuelType.equalsIgnoreCase("Bensin") && !fuelType.equalsIgnoreCase("Diesel") && !fuelType.equalsIgnoreCase("Electric")) {
-            System.out.println("Tipe bahan bakar tidak valid!");
-        } else {
-            this.fuelType = fuelType;
-        }
-    }
-
-    public int getSeatingCapacity() {
-        return seatingCapacity;
-    }
-
-    public void setSeatingCapacity(int seatingCapacity) {
-        if (seatingCapacity <= 0) {
-            System.out.println("Kapasitas tempat duduk harus lebih dari nol!");
-        } else {
-            this.seatingCapacity = seatingCapacity;
-        }
+    public int getKapasitasDuduk() {
+        return kapasitasduduk;
     }
 
     // Override toString to include Car-specific attributes
     @Override
     public String toString() {
-        return super.toString() + ", Fuel Type: " + fuelType + ", Seats: " + seatingCapacity;
+        return super.toString() + ", Bahan Bakar: " + tipebb + ", Jumlah Kursi: " + kapasitasduduk;
     }
 }
