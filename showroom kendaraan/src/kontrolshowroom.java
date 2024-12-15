@@ -6,6 +6,7 @@ public class kontrolshowroom {
     private Scanner scanner;
     private ArrayList<Vehicle> vehicles;
     private ArrayList<String> riwayatTransaksi;
+    private ArrayList<String> detailInvoice;
     private double totalPembelian;
     private ArrayList<Customer> customers;
 
@@ -13,6 +14,7 @@ public class kontrolshowroom {
         this.scanner = scanner;
         this.vehicles = new ArrayList<>();
         this.riwayatTransaksi = new ArrayList<>();
+        this.detailInvoice = new ArrayList<>(); 
         this.totalPembelian = 0;
         this.customers = new ArrayList<>();
 
@@ -35,18 +37,18 @@ public class kontrolshowroom {
     public void start() {
         int choice;
         do {
-            kontrolmenu.showMainMenu();
+            kontrolmenu.MenuUtama();
             choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    viewVehiclesMenu();
+                    KontrolMenuKendaraan();
                     break;
                 case 2:
-                    purchaseVehicleMenu();
+                    KontrolMenuPembelianKendaraan();
                     break;
                 case 3:
-                    showTransactionHistory();
+                    KontrolRiwayatTransaksi();
                     break;
                 case 4:
                     System.out.println("Terima kasih telah menggunakan sistem showroom kami!");
@@ -57,27 +59,27 @@ public class kontrolshowroom {
         } while (choice != 4);
     }
 
-    private void viewVehiclesMenu() {
+    private void KontrolMenuKendaraan() {
         int subChoice;
         do {
-            kontrolmenu.showViewVehiclesMenu();
+            kontrolmenu.MenuKendaraan();
             subChoice = scanner.nextInt();
 
             switch (subChoice) {
                 case 1:
-                    kontrolmenu.showAllVehicles(vehicles);
+                    kontrolmenu.LihatSemuaKendaraan(vehicles);
                     break;
                 case 2:
-                    kontrolmenu.showMotorcycles(vehicles);
+                    kontrolmenu.LihatMotor(vehicles);
                     break;
                 case 3:
-                    kontrolmenu.showCars(vehicles);
+                    kontrolmenu.LihatMobil(vehicles);
                     break;
                 case 4:
                     System.out.print("\nMasukkan merek kendaraan: ");
                     scanner.nextLine(); // Clear buffer
                     String searchBrand = scanner.nextLine();
-                    kontrolmenu.searchVehicleByBrand(vehicles, searchBrand);
+                    kontrolmenu.CariMerekKendaraan(vehicles, searchBrand);
                     break;
                 case 5:
                     System.out.println("Kembali ke Menu Utama.");
@@ -88,18 +90,18 @@ public class kontrolshowroom {
         } while (subChoice != 5);
     }
 
-    private void purchaseVehicleMenu() {
+    private void KontrolMenuPembelianKendaraan() {
         int buyChoice;
         do {
-            kontrolmenu.showPurchaseMenu();
+            kontrolmenu.MenuPembelianKendaraan();
             buyChoice = scanner.nextInt();
 
             switch (buyChoice) {
                 case 1:
-                    purchaseVehicle(Motorcycle.class);
+                    kontrolRincianKendaraan(Motorcycle.class);
                     break;
                 case 2:
-                    purchaseVehicle(Car.class);
+                    kontrolRincianKendaraan(Car.class);
                     break;
                 case 3:
                     System.out.println("Kembali ke Menu Utama.");
@@ -110,8 +112,8 @@ public class kontrolshowroom {
         } while (buyChoice != 3);
     }
 
-    private void purchaseVehicle(Class<?> vehicleType) {
-        kontrolmenu.showVehiclesByType(vehicles, vehicleType);
+    private void kontrolRincianKendaraan(Class<?> vehicleType) {
+        kontrolmenu.RincianKendaraan(vehicles, vehicleType);
         System.out.print("\nMasukkan nomor kendaraan yang ingin dibeli: ");
         int index = scanner.nextInt() - 1;
 
@@ -121,7 +123,7 @@ public class kontrolshowroom {
             Vehicle vehicle = vehicles.get(index);
 
             if (vehicle.getStockQuantity() >= quantity) {
-                double total = vehicle.getPrice() * quantity;
+                double total = vehicle.getHarga() * quantity;
     
                 System.out.print("Masukkan nominal pembayaran: ");
                 double nominalPembayaran = scanner.nextDouble();
@@ -138,7 +140,6 @@ public class kontrolshowroom {
                 Customer customer = findCustomerByName(customerName);
 
                 if (customer == null) {
-                    System.out.println("Pelanggan tidak ditemukan. Menambahkan pelanggan baru...");
                     customer = new Customer(customerName);
                     customers.add(customer);
                 }
@@ -165,18 +166,20 @@ public class kontrolshowroom {
     }
 
     private void generateInvoice(Customer customer, Vehicle vehicle, int quantity, double total, double nominalPembayaran, double kembalian) {
-        System.out.println("\n========Invoice Pembelian========");
-        System.out.println("Nama Pelanggan   : " + customer.getName());
-        System.out.println("Kendaraan        : " + vehicle.getBrand() + " " + vehicle.getModel());
-        System.out.println("Harga per Unit   : Rp" + vehicle.getPrice());
-        System.out.println("Jumlah Unit      : " + quantity);
-        System.out.println("Total Harga      : Rp" + total);
-        System.out.println("Nominal Dibayar  : Rp" + nominalPembayaran);
-        System.out.println("Kembalian        : Rp" + kembalian);
-        System.out.println("=================================");
+        String invoice = "\n========Invoice Pembelian========\n"
+        + "Nama Pelanggan   : " + customer.getName() + "\n"
+        + "Kendaraan        : " + vehicle.getBrand() + " " + vehicle.getModel() + "\n"
+        + "Harga per Unit   : Rp" + vehicle.getHarga() + "\n"
+        + "Jumlah Unit      : " + quantity + "\n"
+        + "Total Harga      : Rp" + total + "\n"
+        + "Nominal Dibayar  : Rp" + nominalPembayaran + "\n"
+        + "Kembalian        : Rp" + kembalian + "\n"
+        + "=================================";
+        System.out.println(invoice);
+        detailInvoice.add(invoice);
     }
-    private void showTransactionHistory() {
-    kontrolmenu.showTransactionHistory(riwayatTransaksi, totalPembelian);
+    private void KontrolRiwayatTransaksi() {
+        kontrolmenu.riwayatTransaksi(riwayatTransaksi, detailInvoice,totalPembelian, scanner);
     }
 
     private Customer findCustomerByName(String name) {
