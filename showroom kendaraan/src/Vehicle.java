@@ -1,11 +1,11 @@
 public class Vehicle {
     private String brand;
     private String model;
-    private int harga;
+    private long harga;
     private int stockQuantity;
 
     // Constructor
-    public Vehicle(String brand, String model, int harga, int stockQuantity) {
+    public Vehicle(String brand, String model, long harga, int stockQuantity) {
         this.brand = brand;
         this.model = model;
         this.harga = harga;
@@ -29,11 +29,11 @@ public class Vehicle {
         this.model = model;
     }
 
-    public int getHarga() {
+    public long getHarga() {
         return harga;
     }
 
-    public void setHarga(int harga) {
+    public void setHarga(long harga) {
         this.harga = harga;
     }
 

@@ -122,12 +122,18 @@ public class kontrolshowroom {
             int quantity = scanner.nextInt();
             Vehicle vehicle = vehicles.get(index);
 
+            double total = vehicle.getHarga() * quantity;
+            System.out.println("Total yang harus dibayar: Rp" + total);
+
             if (vehicle.getStockQuantity() >= quantity) {
-                double total = vehicle.getHarga() * quantity;
-    
                 System.out.print("Masukkan nominal pembayaran: ");
                 double nominalPembayaran = scanner.nextDouble();
     
+                if (nominalPembayaran < total) {
+                    System.out.println("Uang tidak cukup. Transaksi dibatalkan.");
+                    return;
+                }
+                
                 if (nominalPembayaran < total) {
                     System.out.println("Uang tidak cukup. Transaksi dibatalkan.");
                     return;

@@ -32,28 +32,37 @@ public class kontrolmenu {
 
     public static void LihatSemuaKendaraan(ArrayList<Vehicle> vehicles) {
         System.out.println("\n-- Semua Kendaraan --");
+        System.out.printf("%-15s %-15s %-10s %-10s%n", "Brand", "Model", "Harga", "Stock");
+        System.out.println("-------------------------------------------------");
         for (Vehicle v : vehicles) {
-            System.out.println(v);
+            System.out.printf("%-15s %-15s %-10d %-10d%n", v.getBrand(), v.getModel(), v.getHarga(), v.getStockQuantity());
         }
     }
 
     public static void LihatMotor(ArrayList<Vehicle> vehicles) {
         System.out.println("\n-- Daftar Motor --");
+        System.out.printf("%-15s %-15s %-10s %-10s %-10s %-10s%n", "Brand", "Model", "Harga", "Stock", "CC Mesin", "Kategori");
+        System.out.println("-------------------------------------------------------------------------");
         for (Vehicle v : vehicles) {
             if (v instanceof Motorcycle) {
-                System.out.println(v);
+                Motorcycle m = (Motorcycle) v;
+                System.out.printf("%-15s %-15s %-10d %-10d %-10d %-10s%n", m.getBrand(), m.getModel(), m.getHarga(), m.getStockQuantity(), m.getCCMesin(), m.getkategori());
             }
         }
     }
 
     public static void LihatMobil(ArrayList<Vehicle> vehicles) {
         System.out.println("\n-- Daftar Mobil --");
+        System.out.printf("%-15s %-15s %-10s %-10s %-15s %-10s%n", "Brand", "Model", "Harga", "Stock", "Bahan Bakar", "Jumlah Kursi");
+        System.out.println("-----------------------------------------------------------------------------------");
         for (Vehicle v : vehicles) {
             if (v instanceof Car) {
-                System.out.println(v);
+                Car c = (Car) v;
+                System.out.printf("%-15s %-15s %-10d %-10d %-15s %-10d%n", c.getBrand(), c.getModel(), c.getHarga(), c.getStockQuantity(), c.getTipebb(), c.getKapasitasDuduk());
             }
         }
     }
+    
 
     public static void CariMerekKendaraan(ArrayList<Vehicle> vehicles, String brand) {
         boolean found = false;
