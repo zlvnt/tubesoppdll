@@ -45,7 +45,6 @@ public class Vehicle {
         this.stockQuantity = stockQuantity;
     }
 
-    // Display basic vehicle information
     public String toString() {
         return "Brand: " + brand + ", Model: " + model + ", Harga: " + harga + ", Stock: " + stockQuantity;
     }
