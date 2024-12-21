@@ -19,7 +19,6 @@ public class Motorcycle extends Vehicle {
         return kategori;
     }
 
-    // Override toString to include Motorcycle-specific attributes
     @Override
     public String toString() {
         return super.toString() + ", CC Mesin: " + ccMESIN + ", Kategori: " + kategori;
