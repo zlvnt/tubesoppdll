@@ -202,7 +202,7 @@ public class kontrolshowroom {
             double kembalian = nominalPembayaran - total;
     
             System.out.print("Masukkan nama pelanggan: ");
-            scanner.nextLine(); // Clear buffer
+            scanner.nextLine();
             String customerName = scanner.nextLine();
             Customer customer = findCustomerByName(customerName);
     
@@ -213,14 +213,14 @@ public class kontrolshowroom {
     
             selectedVehicle.setStockQuantity(selectedVehicle.getStockQuantity() - quantity);
             totalPembelian += total;
-            riwayatTransaksi.add(selectedVehicle.getBrand() + " " + selectedVehicle.getModel() + " - " + quantity + " unit - Rp" + total);
+            riwayatTransaksi.add(selectedVehicle.getBrand() + " " + selectedVehicle.getModel() + " - " + quantity + " unit - Rp" + df.format(total));
             customer.addPurchase(total);
     
-            System.out.println("Transaksi berhasil! Total: Rp" + total);
-            System.out.println("Nominal pembayaran: Rp" + nominalPembayaran);
+            System.out.println("Transaksi berhasil! Total: Rp" + df.format(total));
+            System.out.println("Nominal pembayaran: Rp" + df.format(nominalPembayaran));
     
             if (kembalian > 0) {
-                System.out.println("Kembalian: Rp" + kembalian);
+                System.out.println("Kembalian: Rp" + df.format(kembalian));
             }
     
             generateInvoice(customer, selectedVehicle, quantity, total, nominalPembayaran, kembalian);
@@ -260,11 +260,10 @@ public class kontrolshowroom {
         if (nomor > 0 && nomor <= detailInvoice.size()) {
             return detailInvoice.get(nomor - 1);
         } else {
-            return "Nomor riwayat tidak valid.";
+            return "Nomor riwayat tidak tersedia. Silakan masukkan nomor yang sesuai.";
         }
     }
     
-
     private Customer findCustomerByName(String name) {
         for (Customer customer : customers) {
             if (customer.getName().equalsIgnoreCase(name)) {
@@ -291,7 +290,7 @@ public class kontrolshowroom {
             System.out.println("Mobil berhasil ditambahkan!");
         } else if (tipe == 2) {
             int ccMesin = kontrolmenu.InputInteger(scanner, "CC Mesin");
-            scanner.nextLine(); // Clear buffer
+            scanner.nextLine();
             String kategori = kontrolmenu.InputData(scanner, "kategori");
     
             vehicles.add(new Motorcycle(brand, model, harga, stok, ccMesin, kategori));
