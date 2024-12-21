@@ -121,13 +121,20 @@ public class kontrolmenu {
     
         if (pilihan.equalsIgnoreCase("yes")) {
             System.out.print("Masukkan nomor riwayat: ");
-            int nomor = scanner.nextInt();
-
-            System.out.println(showroom.getDetailInvoice(nomor));
+            if (scanner.hasNextInt()) {
+                int nomor = scanner.nextInt();
+    
+                String invoiceDetail = showroom.getDetailInvoice(nomor);
+                System.out.println(invoiceDetail);
+            } else {
+                System.out.println("Input tidak valid. Masukkan nomor riwayat berupa angka.");
+                scanner.next();
+            }
         } else if (!pilihan.equalsIgnoreCase("no")) {
             System.out.println("Pilihan tidak valid. Kembali ke menu utama.");
         }
-    }    
+    }
+    
 
     public static String InputData(Scanner scanner, String label) {
         System.out.print("Masukkan " + label + ": ");
