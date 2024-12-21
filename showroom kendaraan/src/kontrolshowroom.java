@@ -54,15 +54,12 @@ public class kontrolshowroom {
                     kontrolmenu.riwayatTransaksi(this, scanner);
                     break;
                 case 4:
-                    KontrolTambahKendaraan();
-                    break;
-                case 5:
                     System.out.println("Terima kasih telah menggunakan sistem showroom kami!");
                     break;
                 default:
                     System.out.println("Pilihan tidak valid. Silakan coba lagi.");
             }
-        } while (choice != 5);
+        } while (choice != 4);
     }
 
     private void KontrolMenuKendaraan() {
@@ -102,12 +99,15 @@ public class kontrolshowroom {
                     }
                     break;
                 case 6:
+                    KontrolTambahKendaraan();
+                    break;
+                case 7:
                     System.out.println("Kembali ke Menu Utama.");
                     break;
                 default:
                     System.out.println("Pilihan tidak valid. Silakan coba lagi.");
             }
-        } while (subChoice != 6);
+        } while (subChoice != 7);
     }
 
     public ArrayList<Vehicle> kontrolCariKendaraan(String brand) {
