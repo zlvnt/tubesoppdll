@@ -11,8 +11,7 @@ public class kontrolmenu {
         System.out.println("1. Lihat Daftar Kendaraan");
         System.out.println("2. Beli Kendaraan");
         System.out.println("3. Riwayat Transaksi");
-        System.out.println("4. Tambah Kendaraan");
-        System.out.println("5. Keluar");
+        System.out.println("4. Keluar");
         System.out.print("Pilih menu: ");
     }
 
@@ -23,7 +22,8 @@ public class kontrolmenu {
         System.out.println("3. Lihat Daftar Mobil");
         System.out.println("4. Cari Merek Kendaraan");
         System.out.println("5. Filter Kendaraan Berdasarkan Harga");
-        System.out.println("6. Kembali ke Menu Utama");
+        System.out.println("6. Tambah Kendaraan");
+        System.out.println("7. Kembali ke Menu Utama");
         System.out.print("Pilih opsi: ");
     }
 
