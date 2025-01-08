@@ -1,10 +1,9 @@
-
 public class Motorcycle extends Vehicle {
     private int ccMESIN;
     private String kategori;
 
     // Constructor
-    public Motorcycle(String brand, String model, int harga, int stockQuantity, int ccMESIN, String kategori) {
+    public Motorcycle(String brand, String model, long harga, int stockQuantity, int ccMESIN, String kategori) {
         super(brand, model, harga, stockQuantity);
         this.ccMESIN = ccMESIN;
         this.kategori = kategori;
