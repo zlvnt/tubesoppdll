@@ -1,5 +1,6 @@
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class kontrolshowroom {
@@ -21,7 +22,6 @@ public class kontrolshowroom {
         this.totalPembelian = 0;
         this.customers = new ArrayList<>();
 
-        // Tambahkan kendaraan (contoh data)
         vehicles.add(new Car("Toyota", "Camry", 500000000, 3, "Bensin", 5));
         vehicles.add(new Car("Honda", "Civic", 400000000, 4, "Bensin", 5));
         vehicles.add(new Car("Mitsubishi", "Pajero Sport", 550000000, 3, "Diesel", 7));
@@ -33,82 +33,96 @@ public class kontrolshowroom {
         vehicles.add(new Motorcycle("Kawasaki", "Ninja 250", 64000000, 10, 250, "Sport"));
         vehicles.add(new Motorcycle("Suzuki", "GSX-S150", 30000000, 9, 150, "Street Bike"));
         vehicles.add(new Motorcycle("Vespa", "Primavera 150", 55000000, 7, 150, "Scooter"));
-        // Tambahkan pelanggan (contoh data)
+
         customers.add(new Customer("John Doe"));
     }
 
     public void start() {
-        int choice;
+        int choice = 0;
         do {
-            kontrolmenu.MenuUtama();
-            choice = scanner.nextInt();
+            try {
+                kontrolmenu.MenuUtama();
+                choice = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    KontrolMenuKendaraan();
-                    break;
-                case 2:
-                    KontrolMenuPembelianKendaraan();
-                    break;
-                case 3:
-                    kontrolmenu.riwayatTransaksi(this, scanner);
-                    break;
-                case 4:
-                    System.out.println("Terima kasih telah menggunakan sistem showroom kami!");
-                    break;
-                default:
-                    System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+                switch (choice) {
+                    case 1:
+                        KontrolMenuKendaraan();
+                        break;
+                    case 2:
+                        KontrolMenuPembelianKendaraan();
+                        break;
+                    case 3:
+                        kontrolmenu.riwayatTransaksi(this, scanner);
+                        break;
+                    case 4:
+                        System.out.println("Terima kasih telah menggunakan sistem showroom kami!");
+                        break;
+                    default:
+                        System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input harus berupa angka! Silakan coba lagi.");
+                scanner.next();
             }
         } while (choice != 4);
     }
 
-    private void KontrolMenuKendaraan() {
-        int subChoice;
-        do {
-            kontrolmenu.MenuKendaraan();
-            subChoice = scanner.nextInt();
 
-            switch (subChoice) {
-                case 1:
-                    kontrolmenu.LihatSemuaKendaraan(vehicles);
-                    break;
-                case 2:
-                    kontrolmenu.LihatMotor(vehicles);
-                    break;
-                case 3:
-                    kontrolmenu.LihatMobil(vehicles);
-                    break;
-                case 4:
-                    System.out.print("\nMasukkan merek kendaraan: ");
-                    scanner.nextLine();
-                    String cariBrand = scanner.nextLine();
-                    kontrolmenu.CariKendaraan(this, cariBrand);
-                    break;
-                case 5:
-                    System.out.print("Harga minimum: ");
-                    int minPrice = scanner.nextInt();
-                    System.out.print("Harga maksimum: ");
-                    int maxPrice = scanner.nextInt();
-                
-                    ArrayList<Vehicle> hasilFilter = kontrolFilterHarga(minPrice, maxPrice);
-                
-                    if (hasilFilter.isEmpty()) {
-                        System.out.println("Tidak ada kendaraan dalam rentang harga tersebut.");
-                    } else {
-                        kontrolmenu.FilterHarga(hasilFilter);
-                    }
-                    break;
-                case 6:
-                    KontrolTambahKendaraan();
-                    break;
-                case 7:
-                    System.out.println("Kembali ke Menu Utama.");
-                    break;
-                default:
-                    System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+    private void KontrolMenuKendaraan() {
+        int subChoice = 0;
+        do {
+            try {
+                kontrolmenu.MenuKendaraan();
+                subChoice = scanner.nextInt();
+                scanner.nextLine();
+    
+                switch (subChoice) {
+                    case 1:
+                        kontrolmenu.LihatSemuaKendaraan(vehicles);
+                        break;
+                    case 2:
+                        kontrolmenu.LihatMotor(vehicles);
+                        break;
+                    case 3:
+                        kontrolmenu.LihatMobil(vehicles);
+                        break;
+                    case 4:
+                        System.out.print("\nMasukkan merek kendaraan: ");
+                        String cariBrand = scanner.nextLine();
+                        kontrolmenu.CariKendaraan(this, cariBrand);
+                        break;
+                    case 5:
+                        System.out.print("Harga minimum: ");
+                        int minPrice = scanner.nextInt();
+                        System.out.print("Harga maksimum: ");
+                        int maxPrice = scanner.nextInt();
+                        scanner.nextLine();
+    
+                        ArrayList<Vehicle> hasilFilter = kontrolFilterHarga(minPrice, maxPrice);
+    
+                        if (hasilFilter.isEmpty()) {
+                            System.out.println("Tidak ada kendaraan dalam rentang harga tersebut.");
+                        } else {
+                            kontrolmenu.FilterHarga(hasilFilter);
+                        }
+                        break;
+                    case 6:
+                        kontrolmenu.TambahKendaraan(scanner, vehicles);
+                        break;
+                    case 7:
+                        System.out.println("Kembali ke Menu Utama.");
+                        break;
+                    default:
+                        System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input harus berupa angka! Silakan coba lagi.");
+                scanner.next();
             }
         } while (subChoice != 7);
     }
+    
 
     public ArrayList<Vehicle> kontrolCariKendaraan(String brand) {
         ArrayList<Vehicle> hasil = new ArrayList<>();
@@ -153,81 +167,88 @@ public class kontrolshowroom {
     }
 
     private void kontrolRincianKendaraan(Class<?> vehicleType) {
-        if (vehicleType == Car.class) {
-            kontrolmenu.LihatMobil(vehicles);
-        } else if (vehicleType == Motorcycle.class) {
-            kontrolmenu.LihatMotor(vehicles);
-        }
-    
-        System.out.print("\nMasukkan nomor kendaraan yang ingin dibeli: ");
-        int localIndex = scanner.nextInt();
-        Vehicle selectedVehicle = null;
-    
-        int counter = 1;
-        for (Vehicle vehicle : vehicles) {
-            if (vehicleType.isInstance(vehicle)) {
-                if (counter == localIndex) {
-                    selectedVehicle = vehicle;
-                    break;
-                }
-                counter++;
+        try {
+            if (vehicleType == Car.class) {
+                kontrolmenu.LihatMobil(vehicles);
+            } else if (vehicleType == Motorcycle.class) {
+                kontrolmenu.LihatMotor(vehicles);
             }
-        }
     
-        if (selectedVehicle == null) {
-            System.out.println("Pilihan tidak valid. Harap masukkan nomor dari tabel.");
-            return;
-        }
+            System.out.print("\nMasukkan nomor kendaraan yang ingin dibeli: ");
+            int localIndex = scanner.nextInt();
+            scanner.nextLine();
     
-        System.out.print("Masukkan jumlah unit: ");
-        int quantity = scanner.nextInt();
+            Vehicle selectedVehicle = null;
+            int counter = 1;
     
-        if (selectedVehicle.getStockQuantity() >= quantity) {
-            double total = selectedVehicle.getHarga() * quantity;
+            for (Vehicle vehicle : vehicles) {
+                if (vehicleType.isInstance(vehicle)) {
+                    if (counter == localIndex) {
+                        selectedVehicle = vehicle;
+                        break;
+                    }
+                    counter++;
+                }
+            }
     
-            System.out.println("\n=== Rincian Harga ===");
-            System.out.println("Harga per unit       : Rp" + df.format(selectedVehicle.getHarga()));
-            System.out.println("Jumlah unit          : " + quantity);
-            System.out.println("Total yang harus dibayar: Rp" + df.format(total));
-            System.out.println("=====================");                      
-    
-            System.out.print("Masukkan nominal pembayaran: ");
-            double nominalPembayaran = scanner.nextDouble();
-    
-            if (nominalPembayaran < total) {
-                System.out.println("Uang tidak cukup. Transaksi dibatalkan.");
+            if (selectedVehicle == null) {
+                System.out.println("Pilihan tidak valid. Harap masukkan nomor dari tabel.");
                 return;
             }
     
-            double kembalian = nominalPembayaran - total;
+            System.out.print("Masukkan jumlah unit: ");
+            int quantity = scanner.nextInt();
     
-            System.out.print("Masukkan nama pelanggan: ");
-            scanner.nextLine();
-            String customerName = scanner.nextLine();
-            Customer customer = findCustomerByName(customerName);
+            if (selectedVehicle.getStockQuantity() >= quantity) {
+                double total = selectedVehicle.getHarga() * quantity;
     
-            if (customer == null) {
-                customer = new Customer(customerName);
-                customers.add(customer);
+                System.out.println("\n=== Rincian Harga ===");
+                System.out.println("Harga per unit       : Rp" + df.format(selectedVehicle.getHarga()));
+                System.out.println("Jumlah unit          : " + quantity);
+                System.out.println("Total yang harus dibayar: Rp" + df.format(total));
+                System.out.println("=====================");
+    
+                System.out.print("Masukkan nominal pembayaran: ");
+                double nominalPembayaran = scanner.nextDouble();
+    
+                if (nominalPembayaran < total) {
+                    System.out.println("Uang tidak cukup. Transaksi dibatalkan.");
+                    return;
+                }
+    
+                double kembalian = nominalPembayaran - total;
+                System.out.print("Masukkan nama pelanggan: ");
+                scanner.nextLine();
+                String customerName = scanner.nextLine();
+                Customer customer = findCustomerByName(customerName);
+    
+                if (customer == null) {
+                    customer = new Customer(customerName);
+                    customers.add(customer);
+                }
+    
+                selectedVehicle.setStockQuantity(selectedVehicle.getStockQuantity() - quantity);
+                totalPembelian += total;
+                riwayatTransaksi.add(selectedVehicle.getBrand() + " " + selectedVehicle.getModel() + " - " + quantity + " unit - Rp" + df.format(total));
+                customer.addPurchase(total);
+    
+                System.out.println("Transaksi berhasil! Total: Rp" + df.format(total));
+                if (kembalian > 0) {
+                    System.out.println("Kembalian: Rp" + df.format(kembalian));
+                }
+    
+                generateInvoice(customer, selectedVehicle, quantity, total, nominalPembayaran, kembalian);
+            } else {
+                System.out.println("Stok tidak mencukupi!");
             }
-    
-            selectedVehicle.setStockQuantity(selectedVehicle.getStockQuantity() - quantity);
-            totalPembelian += total;
-            riwayatTransaksi.add(selectedVehicle.getBrand() + " " + selectedVehicle.getModel() + " - " + quantity + " unit - Rp" + df.format(total));
-            customer.addPurchase(total);
-    
-            System.out.println("Transaksi berhasil! Total: Rp" + df.format(total));
-            System.out.println("Nominal pembayaran: Rp" + df.format(nominalPembayaran));
-    
-            if (kembalian > 0) {
-                System.out.println("Kembalian: Rp" + df.format(kembalian));
-            }
-    
-            generateInvoice(customer, selectedVehicle, quantity, total, nominalPembayaran, kembalian);
-        } else {
-            System.out.println("Stok tidak mencukupi!");
+        } catch (InputMismatchException e) {
+            System.out.println("Input harus berupa angka! Silakan coba lagi.");
+            scanner.next();
+        } catch (Exception e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
         }
-    }    
+    }
+      
     
     private void generateInvoice(Customer customer, Vehicle vehicle, int quantity, double total, double nominalPembayaran, double kembalian) {
         String invoice = "\n========Invoice Pembelian========\n"
@@ -272,31 +293,4 @@ public class kontrolshowroom {
         }
         return null;
     }
-    private void KontrolTambahKendaraan() {
-        int tipe = kontrolmenu.MenuTambahKendaraan(scanner);
-        scanner.nextLine();
-    
-        String brand = kontrolmenu.InputData(scanner, "merek");
-        String model = kontrolmenu.InputData(scanner, "model");
-        int harga = kontrolmenu.InputInteger(scanner, "harga");
-        int stok = kontrolmenu.InputInteger(scanner, "stok");
-        scanner.nextLine();
-    
-        if (tipe == 1) {
-            String bahanBakar = kontrolmenu.InputData(scanner, "Tipe bahan bakar");
-            int jumlahKursi = kontrolmenu.InputInteger(scanner, "jumlah kursi");
-    
-            vehicles.add(new Car(brand, model, harga, stok, bahanBakar, jumlahKursi));
-            System.out.println("Mobil berhasil ditambahkan!");
-        } else if (tipe == 2) {
-            int ccMesin = kontrolmenu.InputInteger(scanner, "CC Mesin");
-            scanner.nextLine();
-            String kategori = kontrolmenu.InputData(scanner, "kategori");
-    
-            vehicles.add(new Motorcycle(brand, model, harga, stok, ccMesin, kategori));
-            System.out.println("Motor berhasil ditambahkan!");
-        } else {
-            System.out.println("Pilihan tipe kendaraan tidak valid!");
-        }
-    }    
 }
