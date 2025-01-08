@@ -3,12 +3,12 @@ public class Car extends Vehicle {
     private int kapasitasduduk;
 
     // Constructor
-    public Car(String brand, String model, int harga, int stockQuantity, String tipebb, int kapasitasduduk) {
+    public Car(String brand, String model, long harga, int stockQuantity, String tipebb, int kapasitasduduk) {
         super(brand, model, harga, stockQuantity);
         this.tipebb = tipebb;
         this.kapasitasduduk = kapasitasduduk;
     }
-    
+
     // Getter and Setter
     public String getTipebb() {
         return tipebb;
