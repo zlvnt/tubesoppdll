@@ -43,6 +43,35 @@ public class kontrolmenu {
         System.out.print("Masukkan pilihan: ");
         return scanner.nextInt();
     }
+
+    public static void TambahKendaraan(Scanner scanner, ArrayList<Vehicle> vehicles) {
+        System.out.println("\n-- Tambah Kendaraan --");
+        System.out.print("Pilih tipe kendaraan (1: Mobil, 2: Motor): ");
+        int tipe = scanner.nextInt();
+        scanner.nextLine();
+    
+        String brand = InputData(scanner, "merek");
+        String model = InputData(scanner, "model");
+        long harga = InputInteger(scanner, "harga");
+        int stok = InputInteger(scanner, "stok");
+        scanner.nextLine();
+
+    if (tipe == 1) {
+        String bahanBakar = InputData(scanner, "Tipe bahan bakar");
+        int jumlahKursi = InputInteger(scanner, "jumlah kursi");
+        vehicles.add(Vehicle.buatKendaraan("Car", brand, model, harga, stok, bahanBakar, jumlahKursi));
+        System.out.println("Mobil berhasil ditambahkan!");
+    } else if (tipe == 2) {
+        int ccMesin = InputInteger(scanner, "CC Mesin");
+        scanner.nextLine(); // Membersihkan buffer
+        String kategori = InputData(scanner, "kategori");
+        vehicles.add(Vehicle.buatKendaraan("Motorcycle", brand, model, harga, stok, kategori, ccMesin));
+        System.out.println("Motor berhasil ditambahkan!");
+    } else {
+        System.out.println("Pilihan tidak valid!");
+    }
+
+    }  
     
     public static void LihatSemuaKendaraan(ArrayList<Vehicle> vehicles) {
         System.out.println("\n-- Semua Kendaraan --");
@@ -134,7 +163,6 @@ public class kontrolmenu {
             System.out.println("Pilihan tidak valid. Kembali ke menu utama.");
         }
     }
-    
 
     public static String InputData(Scanner scanner, String label) {
         System.out.print("Masukkan " + label + ": ");
@@ -143,6 +171,10 @@ public class kontrolmenu {
     
     public static int InputInteger(Scanner scanner, String label) {
         System.out.print("Masukkan " + label + ": ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Input harus berupa angka. Silakan coba lagi.");
+            scanner.next();
+        }
         return scanner.nextInt();
-    }
+    }   
 }
